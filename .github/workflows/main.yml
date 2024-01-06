@@ -6,24 +6,24 @@ on:
       - 'main'
 
 env:
-  TEST_TAG: hexletcomponents/devops-example-app:test
+  TEST_TAG: yura2201/devops-example-app:test
 
 jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      - uses: docker/setup-qemu-action@v1
-      - uses: docker/setup-buildx-action@v1
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
 
-      - uses: docker/login-action@v2
+      - uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and export to Docker
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v5
         with:
           context: .
           load: true
@@ -33,16 +33,16 @@ jobs:
       - run: make compose-lint-ci
 
       - name: Build and push app
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          tags: hexletcomponents/devops-example-app:latest
+          tags: yura2201/devops-example-app:latest
 
       - name: Build and push caddy
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v5
         with:
           context: .
           file: services/caddy/Dockerfile
           push: true
-          tags: hexletcomponents/devops-example-caddy:latest
+          tags: yura2201/devops-example-caddy:latest
