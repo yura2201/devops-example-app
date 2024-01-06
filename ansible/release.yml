@@ -7,6 +7,16 @@
     - community.docker.docker_network:
         name: devops-example
 
+    - name: Create Caddy Data Volume
+      community.docker.docker_volume:
+        name: caddy_data
+        recreate: never
+
+    - name: Create Caddy Config Volume
+      community.docker.docker_volume:
+        name: caddy_config
+        recreate: always
+
     - community.docker.docker_container:
         name: app
         # Обязатлеьно указываем тег, который хотим деплоить
@@ -36,3 +46,6 @@
         ports:
           - 80:80
           - 443:443
+        volumes:
+          - caddy_data:/data
+          - caddy_config:/config

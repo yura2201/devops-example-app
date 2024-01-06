@@ -1,4 +1,4 @@
-localhost, yurait6.ru {
+localhost, *.yurait6.ru {
 	tls internal
 
 	handle /images/* {
