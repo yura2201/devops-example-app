@@ -15,7 +15,6 @@
     - name: Create Caddy Config Volume
       community.docker.docker_volume:
         name: caddy_config
-        recreate: always
 
     - community.docker.docker_container:
         name: app
@@ -35,6 +34,7 @@
         #  - 3000:3000
         env: # Настраиваем
           NODE_ENV: production
+          SERVER_MESSAGE: "{{ main_message }}"
 
     - community.docker.docker_container:
         name: caddy
